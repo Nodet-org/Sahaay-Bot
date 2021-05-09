@@ -2,7 +2,7 @@ import tweepy
 import os
 import dotenv
 from datetime import date, timedelta
-import random, requests, time
+import random, requests, time, json
 
 dotenv.load_dotenv()
 
@@ -32,25 +32,49 @@ def sahaay_tweeter(data):
     api.update_status(status)
 
 def data_tweeter(data):
+    with open("states.json") as json_file:
+        states = json.load(json_file)["states"]
+    status = ""
     for place in data:
         for resource in data[place]:
             for resource_id in data[place][resource]:
                 details = data[place][resource][resource_id]
-                status = f'''
+                state = "" 
+                for state_data in states:
+                    for district in state_data["districts"]:
+                        if district.lower() == place.lower():
+                            state = state_data["state"]
+                            break
+                    if state != "":
+                        break
+                if state != "":
+                    status = f'''
+Verification Status: {details['isVerified']}
+Resource available : #{resource.capitalize()}
+Available at : #{place.capitalize().replace(' ', '_')}, #{state.replace(' ', '_')}
+Name : {details['name']}
+Contact : {details['phone']}
+
+#{place.capitalize()} #{state} #{resource.capitalize()} #sahaay
+visit https://sahaay.xyz for more resources'''
+                    pass
+                else:
+                    status = f'''
+Verification Status: {details['isVerified']}
 Resource available : #{resource.capitalize()}
 Available at : #{place.capitalize()}
+Name : {details['name']}
 Contact : {details['phone']}
-Verification Status: {details['isVerified']}
 
 #{place.capitalize()} #{resource.capitalize()} #sahaay
-visit https://sahaay.xyz for more resources
-                '''
-                # print(status)
-                try:
-                    api.update_status(status)
-                except:
-                    print("Twitter kai ozhinju makkale !")
-                time.sleep(20)
+visit https://sahaay.xyz for more resources'''
+                    pass
+                print(status)
+                # try:
+                #     api.update_status(status)
+                # except:
+                #     print("Twitter kai ozhinju makkale !")
+                # time.sleep(20)
 
 
 def retweeter():
