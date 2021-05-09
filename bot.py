@@ -6,9 +6,9 @@ app = Flask(__name__)
 isRetweeting = False
 
 
-@app.route("/tweet", methods=['POST'])
+@app.route("/tweet", methods=['GET'])
 def index():
-    return "<h1>Hey, Sahaay Bot here !</h1>"
+    return "<title>Sahaay Bot</title><h1>Hey, Sahaay Bot here !</h1>"
 
 @app.route("/tweet", methods=['POST'])
 def tweet_new_resource():
