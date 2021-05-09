@@ -20,14 +20,14 @@ except:
 
 def sahaay_tweeter(data):
     status = f'''
-    Resource available : #{data['resource']}
-    Available at : #{data['place']}
-    Quantity available : #{data['quantity']}
-    Price : #{data['price']}
-    Contact : {data['phone']}
+Resource available : #{data['resource']}
+Available at : #{data['place']}
+Quantity available : #{data['quantity']}
+Price : #{data['price']}
+Contact : {data['phone']}
 
-    #{data['place']} #{data['resource']} #sahaay
-    visit https://sahaay.xyz for more resources
+#{data['place']} #{data['resource']} #sahaay
+visit https://sahaay.xyz for more resources
     '''
     api.update_status(status)
 
@@ -69,12 +69,13 @@ Contact : {details['phone']}
 #{place.capitalize()} #{resource.capitalize()} #sahaay
 visit https://sahaay.xyz for more resources'''
                     pass
-                print(status)
-                # try:
-                #     api.update_status(status)
-                # except:
-                #     print("Twitter kai ozhinju makkale !")
-                # time.sleep(20)
+                # print(status)
+                try:
+                    api.update_status(status)
+                    print("New tweet : ", resource.capitalize(), " at ", place.capitalize())
+                except:
+                    print("Twitter kai ozhinju makkale !")
+                time.sleep(20)
 
 
 def retweeter():

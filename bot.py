@@ -5,13 +5,17 @@ import json, time
 app = Flask(__name__)
 isRetweeting = False
 
+
+@app.route("/tweet", methods=['POST'])
+def tweet_new_resource():
+    return "<h1>Hey, Sahaay Bot here !</h1>"
+
 @app.route("/tweet", methods=['POST'])
 def tweet_new_resource():
     if request.method == "POST":
-        # sahaay_tweeter(request.data)
         try:
             data = json.loads(request.data)
-            print(data)
+            sahaay_tweeter(request.data)
         except json.JSONDecodeError as e:
             print(e)
         return Response(status=200)
