@@ -1,52 +1,32 @@
-import tweepy
-import os
-import dotenv
-from datetime import date, timedelta
+from flask import Flask, request, Response
+from twitter import sahaay_tweeter, data_tweeter
+import json, time
 
-dotenv.load_dotenv()
+app = Flask(__name__)
+isRetweeting = False
 
-auth_handler = tweepy.OAuthHandler(os.environ["API_KEY"], os.environ["API_SECRET_KEY"])
-auth_handler.set_access_token(os.environ["ACCESS_TOKEN"], os.environ["ACCESS_TOKEN_SECRET"])
+@app.route("/tweet", methods=['POST'])
+def tweet_new_resource():
+    if request.method == "POST":
+        # sahaay_tweeter(request.data)
+        try:
+            data = json.loads(request.data)
+            print(data)
+        except json.JSONDecodeError as e:
+            print(e)
+        return Response(status=200)
 
-api = tweepy.API(auth_handler, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
-try:
-    api.verify_credentials()
-    print("Authentication OK")
-except:
-    print("Error during authentication")
-
-def tweeter(data):
-    status = f'''
-    Resource available : #${data['resource']}
-    Available at : #${data['place']}
-    Quantity available : #${data['quantity']}
-    Price : #${data['price']}
-    Contact : ${data['phone']}, 4{data['email']}
-
-    #${data['place']} #${data['resource']} #sahaay
-    visit sahaay.xyz for more resources
-    '''
-    api.update_status(status)
-
-
-def retweeter():
-    hashtag = "#COVIDsecondwave"
-    yesterday = date.today() - timedelta(days = 1)
-    tweets = tweepy.Cursor(api.search, q=hashtag, lang="en", since=yesterday, tweet_mode='extended').items(10)
-    for tweet in tweets:
-        tweet_id = tweet._json["id"])
-        api.retweet(tweet_id)
-
+@app.route("/bot", methods=['GET'])
+def tweet_bot():
+    global isRetweeting
+    if isRetweeting:
+        print("Ithonn theerthoott annaa")
+        return Response(status=500)
+    isRetweeting = True
+    with open("./data.json") as json_file:
+        data = json.load(json_file)
+    data_tweeter(data)
+    return Response(status=200)
 
 if __name__ == "__main__":
-    dummy_data = {
-        "resource": "Test Resource",
-        "place": "Test City",
-        "quantity": "20",
-        "price": "100",
-        "phone": "1234567890",
-        "email": "test@test.com"
-    }
-    # tweeter(dummy_data)
-    retweeter()
-
+    app.run()
