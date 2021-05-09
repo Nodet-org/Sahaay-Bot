@@ -33,6 +33,7 @@ visit https://sahaay.xyz for more resources
     api.update_status(status)
 
 def data_tweeter(data):
+    untweeted = []
     with open(os.path.join(os.path.expanduser('~/Sahaay-Bot'), 'states.json')) as json_file:
         states = json.load(json_file)["states"]
     status = ""
@@ -76,7 +77,11 @@ visit https://sahaay.xyz for more resources'''
                     print("New tweet : ", resource.capitalize(), " at ", place.capitalize())
                 except:
                     print("Twitter kai ozhinju makkale !")
-                time.sleep(20)
+                    untweeted.append(resource_id)
+                time.sleep(60)
+    print("Bot termination: ", len(untweeted), " tweets failed !")
+    with open(os.path.join(os.path.expanduser('~/Sahaay-Bot'), 'untweeted.txt')) as text_file:
+        text_file.write(untweeted)
 
 
 def retweeter():
