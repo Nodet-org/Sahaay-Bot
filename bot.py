@@ -7,7 +7,7 @@ isRetweeting = False
 
 
 @app.route("/tweet", methods=['POST'])
-def tweet_new_resource():
+def index():
     return "<h1>Hey, Sahaay Bot here !</h1>"
 
 @app.route("/tweet", methods=['POST'])
