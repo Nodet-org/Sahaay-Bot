@@ -6,7 +6,7 @@ app = Flask(__name__)
 isRetweeting = False
 
 
-@app.route("/tweet", methods=['GET'])
+@app.route("/", methods=['GET'])
 def index():
     return "<title>Sahaay Bot</title><h1>Hey, Sahaay Bot here !</h1>"
 
