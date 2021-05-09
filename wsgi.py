@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-project_folder = os.path.expanduser('~/RetweetBot')
+project_folder = os.path.expanduser('~/Sahaay-Bot')
 load_dotenv(os.path.join(project_folder, '.env'))
 
 import sys

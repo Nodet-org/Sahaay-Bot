@@ -33,7 +33,7 @@ visit https://sahaay.xyz for more resources
     api.update_status(status)
 
 def data_tweeter(data):
-    with open("states.json") as json_file:
+    with open(os.path.join(os.path.expanduser('~/Sahaay-Bot'), 'states.json')) as json_file:
         states = json.load(json_file)["states"]
     status = ""
     for place in data:

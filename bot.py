@@ -1,6 +1,6 @@
 from flask import Flask, request, Response
 from twitter import sahaay_tweeter, data_tweeter
-import json, time
+import json, time, os
 
 app = Flask(__name__)
 isRetweeting = False
@@ -27,7 +27,7 @@ def tweet_bot():
         print("Ithonn theerthoott annaa")
         return Response(status=500)
     isRetweeting = True
-    with open("./data.json") as json_file:
+    with open(os.path.join(os.path.expanduser('~/Sahaay-Bot'), 'data.json')) as json_file:
         data = json.load(json_file)
     data_tweeter(data)
     return Response(status=200)
