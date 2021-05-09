@@ -3,13 +3,14 @@ import os
 import dotenv
 from datetime import date, timedelta
 import random, requests, time, json
+import env
 
 dotenv.load_dotenv()
 
-auth_handler = tweepy.OAuthHandler(os.environ['API_KEY'], os.environ['API_SECRET_KEY'])
-auth_handler.set_access_token(os.environ['ACCESS_TOKEN'], os.environ['ACCESS_TOKEN_SECRET'])
+auth_handler = tweepy.OAuthHandler(env.API_KEY, env.API_SECRET_KEY)
+auth_handler.set_access_token(env.ACCESS_TOKEN, env.ACCESS_TOKEN_SECRET)
 headers = {
-    "Authorization": f"Bearer {os.environ['BEARER_TOKEN']}"
+    "Authorization": f"Bearer {env.BEARER_TOKEN}"
     }
 api = tweepy.API(auth_handler, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 try:
